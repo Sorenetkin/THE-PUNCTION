@@ -9,11 +9,6 @@ bool CompareSourceToText();
 // HOOOOO!!!!!!!!!!!
 
 
-
-int main(){ //define classes of puns and run the program
-    
-}
-
 bool CompareSourceToText(){  //returns false if there is no correct comparison
 
 }
@@ -257,7 +252,7 @@ void analyzePhoneme(string w){
   file.close();
 }
 
-int main(){
+int main(){ //define classes of puns and run the program
   string w;
   cin >> w; 
   w = toCapital(w);
