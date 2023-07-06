@@ -1,9 +1,12 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 bool CompareSourceToText();
+bool ChangeSourceToCME();
+bool ReplaceInSourceCode();
 
 // WOOOO
 // HOOOOO!!!!!!!!!!!
@@ -21,6 +24,27 @@ bool ReplaceInSourceCode (){    //should take in a reference to an array or vect
 
 }
 
+/* --------------------------------------*/
+/* ----- SPLIT SENTENCE INTO WORDS ----- */
+/* --------------------------------------*/
+
+// determine the number of words in the sentence
+
+// splits the sentence (a string) into a series of words (housed in a vector),
+// counting the number of words along the way (numWords)
+void SplitSentence(string sentence, vector <string> v) 
+{
+  int numWords = 0;
+
+  for (int i = 0; i < sentence.size(); i++) {
+    if (isspace(sentence[i])) {
+      if (!isspace(sentence[i+1]))
+        numWords++;
+    }
+    
+  }
+
+}
 
 /* -------------------------------------*/
 /* ----- GENERATE PRONOUNCIATIONS ----- */
@@ -40,7 +64,7 @@ void splitOnSpace(string s, string & before, string & after){
     before += s[i]; 
     i++; 
   }
-  i++;
+  i+=2;
   //accumulate after space
   while (i < s.size()){ 
     after += s[i]; 
@@ -51,9 +75,7 @@ void splitOnSpace(string s, string & before, string & after){
 //Takes in a word w and returns word w in all caps
 string toCapital(string w){
   for(int i = 0; i < w.size(); i++){
-    if((w[i] >= 'a') && (w[i] <= 'z')){
-      w[i] = (char)((int)w[i] -32);
-    }
+    w[i] = toupper(w[i]);
   }
   return w;
 }
@@ -77,11 +99,17 @@ string pronounce(string w){
   return "Not found";//else return "NotFound"
 }
 
-int main(){ //define classes of puns and run the program
-  string w;
-  cin >> w; 
+string GetPronounciation(string w)
+{
   w = toCapital(w);
-  //Runs Pronounce
-  cout << "Pronounce: " << pronounce(w) << endl;
-  return 0;
+  return pronounce(w);
+}
+
+int main(){ //define classes of puns and run the program
+  
+  string w;
+  cin >> w;
+
+  string result = GetPronounciation(w);
+  cout << result;
 }
