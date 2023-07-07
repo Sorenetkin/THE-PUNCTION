@@ -28,22 +28,35 @@ bool ReplaceInSourceCode (){    //should take in a reference to an array or vect
 /* ----- SPLIT SENTENCE INTO WORDS ----- */
 /* --------------------------------------*/
 
-// determine the number of words in the sentence
-
-// splits the sentence (a string) into a series of words (housed in a vector),
-// counting the number of words along the way (numWords)
-void SplitSentence(string sentence, vector <string> v) 
+// splits the sentence (a string) into a series of words (housed in a vector). Each string of
+// non-alphabet and non-space characters gets its own spot in the vector.
+void splitSentence(string sentence, vector <string>& v) 
 {
   int numWords = 0;
 
   for (int i = 0; i < sentence.size(); i++) {
-    if (isspace(sentence[i])) {
-      if (!isspace(sentence[i+1]))
-        numWords++;
-    }
     
-  }
-
+    if (isspace(sentence[i])) {
+      if (i > 0 && !isspace(sentence[i-1])) {
+        numWords++;
+        v.push_back(""); // Is this the most efficient way to do this?
+        } 
+    }
+    else if (!isalpha(sentence[i])) {
+      if (i > 0 && isalpha(sentence[i - 1])){
+        numWords++;
+        v.push_back("");
+      }
+      v[numWords] += sentence[i];
+    }
+    else {
+      if (i > 0 && !isalpha(sentence[i - 1]) && !isspace(sentence[i - 1])){
+        numWords++;
+        v.push_back("");
+      }
+      v[numWords] += sentence[i];// adds to the end of the vector
+    }
+  } 
 }
 
 /* -------------------------------------*/
@@ -99,7 +112,7 @@ string pronounce(string w){
   return "Not found";//else return "NotFound"
 }
 
-string GetPronounciation(string w)
+string getPronounciation(string w)
 {
   w = toCapital(w);
   return pronounce(w);
@@ -108,8 +121,18 @@ string GetPronounciation(string w)
 int main(){ //define classes of puns and run the program
   
   string w;
-  cin >> w;
+  // cin >> w;
+  getline(cin, w);
+  vector <string> v = {""};
 
-  string result = GetPronounciation(w);
-  cout << result;
+  splitSentence(w, v);
+  // string result = getPronounciation(w);
+  // cout << result;
+
+cout << v.size() << endl;
+  for (int i = 0; i < v.size(); i++)
+    cout << v[i] << endl;
+
+
+
 }
