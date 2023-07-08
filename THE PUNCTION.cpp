@@ -4,40 +4,52 @@
 #include <vector>
 using namespace std;
 
-bool CompareSourceToText();
-bool ChangeSourceToCME();
-bool ReplaceInSourceCode();
+bool compareSourceToText();
+bool changeSourceToCME();
+bool replaceInSourceCode();
+
+// split sentence into words:
+void splitSentence(string sentence, vector <string>& v);
+void vectorToPronounciation(vector <string>& v);
+
+// generate pronounciations:
+void splitOnSpace(string s, string & before, string & after);
+string toCapital(string w);
+string pronounce(string w);
+string getPronounciation(string w);
+
+
+
 
 // WOOOO
 // HOOOOO!!!!!!!!!!!
 
 
-bool CompareSourceToText(){  //returns false if there is no correct comparison
+bool compareSourceToText(){  //returns false if there is no correct comparison
 
 }
 
-bool ChangeSourceToCME(){
+bool changeSourceToCME(){
     
 }
 
-bool ReplaceInSourceCode (){    //should take in a reference to an array or vector that we can edit in the function
+bool replaceInSourceCode (){    //should take in a reference to an array or vector that we can edit in the function
 
 }
 
-/* --------------------------------------*/
-/* ----- SPLIT SENTENCE INTO WORDS ----- */
-/* --------------------------------------*/
+/* --------------------------------------------- */
+/* ----- TURN SENTENCE INTO PRONOUNCIATION ----- */
+/* --------------------------------------------- */
 
 // splits the sentence (a string) into a series of words (housed in a vector). Each string of
 // non-alphabet and non-space characters gets its own spot in the vector.
-void splitSentence(string sentence, vector <string>& v) 
-{
+void splitSentence(string sentence, vector <string>& v){
   int numWords = 0;
 
-  for (int i = 0; i < sentence.size(); i++) {
+  for (int i = 0; i < sentence.size(); i++){
     
     if (isspace(sentence[i])) {
-      if (i > 0 && !isspace(sentence[i-1])) {
+      if (i > 0 && !isspace(sentence[i-1])){
         numWords++;
         v.push_back(""); // Is this the most efficient way to do this?
         } 
@@ -57,6 +69,15 @@ void splitSentence(string sentence, vector <string>& v)
       v[numWords] += sentence[i];// adds to the end of the vector
     }
   } 
+}
+
+// turns each word in the vector into its CMU Dictionary form
+void vectorToPronounciation(vector <string>& v){
+  for (int i = 0; i < v.size(); i++){
+    if (isalpha(v[i][0]))
+      v[i] =  getPronounciation(v[i]);
+  }
+
 }
 
 /* -------------------------------------*/
@@ -112,27 +133,29 @@ string pronounce(string w){
   return "Not found";//else return "NotFound"
 }
 
-string getPronounciation(string w)
-{
+string getPronounciation(string w){
   w = toCapital(w);
   return pronounce(w);
 }
 
+/* ---------------- */
+/* ----- MAIN ----- */
+/* ---------------- */
+
 int main(){ //define classes of puns and run the program
   
-  string w;
+  string sentence;
   // cin >> w;
-  getline(cin, w);
+  getline(cin, sentence);
   vector <string> v = {""};
 
-  splitSentence(w, v);
+  splitSentence(sentence, v);
+  vectorToPronounciation(v);
   // string result = getPronounciation(w);
   // cout << result;
 
 cout << v.size() << endl;
   for (int i = 0; i < v.size(); i++)
     cout << v[i] << endl;
-
-
 
 }
