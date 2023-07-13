@@ -72,12 +72,27 @@ void splitSentence(string sentence, vector <string>& v){
 }
 
 // turns each word in the vector into its CMU Dictionary form
-void vectorToPronounciation(vector <string>& v){
+void vectorToPronunciation(vector <string>& v){
   for (int i = 0; i < v.size(); i++){
     if (isalpha(v[i][0]))
-      v[i] =  getPronounciation(v[i]);
+      v[i] =  getPronunciation(v[i]);
   }
 
+}
+
+void splitPronunciation(vector <string>& vOrig, vector <string>& vSplit){
+  int numSyls = 0;
+  
+  for (int i = 0; i < vOrig.size(); i++){
+    for (int j = 0; j < vOrig[i].size(); j++){
+      if (isspace(vOrig[i][j])) {
+        numSyls++;
+      }
+      else
+        vSplit[numSyls] += vOrig[i][j];
+    }
+    numSyls++;
+  }
 }
 
 /* -------------------------------------*/
@@ -133,7 +148,7 @@ string pronounce(string w){
   return "Not found";//else return "NotFound"
 }
 
-string getPronounciation(string w){
+string getPronunciation(string w){
   w = toCapital(w);
   return pronounce(w);
 }
@@ -150,7 +165,7 @@ int main(){ //define classes of puns and run the program
   vector <string> v = {""};
 
   splitSentence(sentence, v);
-  vectorToPronounciation(v);
+  vectorToPronunciation(v);
   // string result = getPronounciation(w);
   // cout << result;
 
