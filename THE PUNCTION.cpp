@@ -10,13 +10,13 @@ bool replaceInSourceCode();
 
 // split sentence into words:
 void splitSentence(string sentence, vector <string>& v);
-void vectorToPronounciation(vector <string>& v);
+void vectorToPronunciation(vector <string>& v);
 
 // generate pronounciations:
 void splitOnSpace(string s, string & before, string & after);
 string toCapital(string w);
 string pronounce(string w);
-string getPronounciation(string w);
+string getPronunciation(string w);
 
 
 
@@ -80,18 +80,25 @@ void vectorToPronunciation(vector <string>& v){
 
 }
 
+// puts each syllable into its own area of a new vector
 void splitPronunciation(vector <string>& vOrig, vector <string>& vSplit){
   int numSyls = 0;
+  string temp = "";
   
   for (int i = 0; i < vOrig.size(); i++){
     for (int j = 0; j < vOrig[i].size(); j++){
       if (isspace(vOrig[i][j])) {
         numSyls++;
+        vSplit.push_back("");
       }
       else
-        vSplit[numSyls] += vOrig[i][j];
+        temp = vSplit[numSyls];
+        temp += vOrig[i][j];
+        vSplit[numSyls] = temp;
+        temp = "";
     }
     numSyls++;
+    vSplit.push_back("");
   }
 }
 
@@ -158,19 +165,25 @@ string getPronunciation(string w){
 /* ---------------- */
 
 int main(){ //define classes of puns and run the program
-  
+
   string sentence;
   // cin >> w;
   getline(cin, sentence);
+
   vector <string> v = {""};
 
   splitSentence(sentence, v);
   vectorToPronunciation(v);
-  // string result = getPronounciation(w);
-  // cout << result;
 
-cout << v.size() << endl;
   for (int i = 0; i < v.size(); i++)
-    cout << v[i] << endl;
+    cout << v[i] << endl << "---------------------" << endl;
+
+  vector <string> vNew = {""};
+  splitPronunciation(v, vNew);
+
+  cout << vNew.size() << endl;
+
+  for (int i = 0; i < vNew.size(); i++)
+    cout << vNew[i] << endl;
 
 }
