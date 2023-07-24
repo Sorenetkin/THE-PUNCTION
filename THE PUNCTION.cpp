@@ -176,15 +176,8 @@ int main(){ //define classes of puns and run the program
   splitSentence(sentence, v);
   vectorToPronunciation(v);
 
-  for (int i = 0; i < v.size(); i++)
-    cout << v[i] << ";" << endl;
-    
-  cout << "---------------------" << endl;
-
   vector <string> vNew = {""};
   splitPronunciation(v, vNew);
-
-  cout << vNew.size() << endl;
 
   for (int i = 0; i < vNew.size(); i++)
     cout << vNew[i] << endl;
