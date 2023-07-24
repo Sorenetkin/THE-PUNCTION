@@ -91,11 +91,12 @@ void splitPronunciation(vector <string>& vOrig, vector <string>& vSplit){
         numSyls++;
         vSplit.push_back("");
       }
-      else
+      else{
         temp = vSplit[numSyls];
         temp += vOrig[i][j];
         vSplit[numSyls] = temp;
         temp = "";
+      }
     }
     numSyls++;
     vSplit.push_back("");
@@ -176,7 +177,9 @@ int main(){ //define classes of puns and run the program
   vectorToPronunciation(v);
 
   for (int i = 0; i < v.size(); i++)
-    cout << v[i] << endl << "---------------------" << endl;
+    cout << v[i] << ";" << endl;
+    
+  cout << "---------------------" << endl;
 
   vector <string> vNew = {""};
   splitPronunciation(v, vNew);
